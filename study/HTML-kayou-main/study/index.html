@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>TeamOCA</title>
+</head>
+
+<body>
+    <div class="container">
+        
+        <!-- ヘッダー -->
+        <header class="header">
+            <div class="header_container">
+                <div class="header_logo">
+                    <a href="/">
+                        <img src="./img/logo.png" alt="logo"  class="logo_image">
+                    </a>
+                </div>
+                <div class="header_menu">
+                    <div class="header_menu_item">
+                        <a href="./news.html">NEWS</a>
+                    </div>
+                    <div class="header_menu_item">
+                        <a href="./schedule.html">SCHEDULE</a>
+                    </div>
+                    <div class="header_menu_item">
+                        <a href="./shop.html">SHOP</a>
+                    </div>
+
+                </div>
+            </div>
+        </header>
+        <div class="honbun">
+            <div class="honbun_container">
+                <div class="honbun_ue">
+                    <div class="honbun_ue_item">
+                        <a>TeamOCAとは</a>
+                    </div>
+                    <div class="honbun_ue_item2">
+                        <a>サンプルテキストサンプルテキスト
+                            サンプルテキストサンプルテキスト
+                            サンプルテキストサンプルテキスト
+                            サンプルテキストサンプルテキスト
+                            サンプルテキストサンプルテキスト
+                            サンプルテキストサンプルテキスト
+                            サンプルテキストサンプルテキスト
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="menber">
+            <div class="menber_container">
+                <div class="menber_container_title">
+                    <a>MEMBER</a>
+                </div>
+                <div class="menber_container_hyo">
+                    
+                    
+                    </div>
+            </div>
+
+        </div>
+</body>
+</html>
+<script>
+let hyo = document.getElementsByClassName("menber_container_hyo")
+console.log(hyo[0])      
+   let ojt
+    for(let i=0; i<10;i++){
+        ojt +=`<a href="/">
+                        <img src= ./img/member/member_${( '00' + (i+1) ).slice( -2 )}.jpeg alt="logo"  >
+                    </a>`
+    }          
+
+    hyo[0].innerHTML = ojt
+    
+
+
+    
+</script>
