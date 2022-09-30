@@ -1,0 +1,128 @@
+/* ページ全体 */
+
+body {
+    background-color: #00d084;
+}
+
+
+/** ヘッダー */
+
+.header_container {
+    display: 50px;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 14px 0 8px 0;
+    background-color: #0f1923;
+
+}
+
+.header_logo {
+    padding: 5px 0 5px 15px;
+    
+
+}
+
+.logo_image {
+    width: 70px;
+}
+
+.header_menu {
+    display: flex;
+    justify-content: flex-end;
+    
+    
+}
+
+
+/* リンク文字 */
+
+.header_menu_item a {
+    color: #00d084;
+    padding: 10px;
+    text-decoration: none
+}
+
+
+/* リンク文字ホバー時 */
+
+a:hover {
+    color: #c6ec9b;
+}
+
+.contents_item h1 {}
+
+.honbun{
+    background-image: url(../img/about.jpg);
+    display: 200px;
+    
+}
+.honbun_container{
+    display: 300px;
+    flex-direction: column;
+}
+.honbun_ue{
+    
+
+    
+}
+.honbun_ue_item{
+    font-size: 30px;
+    color: #00d084;
+    padding: 50px 0 0 100px;
+}
+.honbun_ue_item2{
+    color: beige;
+    padding: 0 800px 0 100px;
+
+}
+.menber{
+   
+}
+.menber_container_title{
+    padding: 50px 0 50px 100px;
+    font-size: 50px;
+}
+
+
+
+.menber_container_hyo{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    background-color: rgb(255, 255, 255);
+    color: aliceblue;
+    text-align: center;
+}
+.menber_container_hyo_1{
+  
+    background-color: black;
+}
+.menber_container_hyo_2{
+  
+    background-color: black;
+}.menber_container_hyo_3{
+  
+    background-color: black;
+}.menber_container_hyo_4{
+  
+    background-color: black;
+}.menber_container_hyo_5{
+  
+    background-color: black;
+}.menber_container_hyo_6{
+  
+    background-color: black;
+}.menber_container_hyo_7{
+  
+    background-color: black;
+}.menber_container_hyo_8{
+  
+    background-color: black;
+}.menber_container_hyo_9{
+  
+    background-color: black;
+}.menber_container_hyo_10{
+  
+    background-color: black;
+}
