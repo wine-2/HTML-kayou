@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<title>カラーバトル 3人対戦</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    height: 100%;
+    overflow: hidden;
+    overscroll-behavior: none;
+    touch-action: manipulation;
+  }
+  body {
+    font-family: -apple-system, "Hiragino Sans", "Yu Gothic", sans-serif;
+    background: linear-gradient(180deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%);
+    color: #fff;
+    user-select: none;
+    -webkit-user-select: none;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    height: 100dvh;
+  }
+
+  /* === 上：プレイヤー1（赤）エリア === */
+  .player-zone {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border: 3px solid transparent;
+    transition: all 0.1s;
+    cursor: pointer;
+    overflow: hidden;
+  }
+
+  .player-zone .label {
+    position: absolute;
+    top: 8px;
+    left: 12px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    opacity: 0.8;
+  }
+
+  .player-zone .score {
+    font-size: 4rem;
+    font-weight: bold;
+    line-height: 1;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  }
+
+  .player-zone .target-text {
+    position: absolute;
+    bottom: 8px;
+    right: 12px;
+    font-size: 0.85rem;
+    opacity: 0.7;
+  }
+
+  .zone-1 { background: rgba(255, 77, 109, 0.15); border-color: #ff4d6d; }
+  .zone-2 { background: rgba(74, 222, 128, 0.15); border-color: #4ade80; }
+  .zone-3 { background: rgba(96, 165, 250, 0.15); border-color: #60a5fa; }
+
+  .zone-1.active { background: #ff4d6d; box-shadow: inset 0 0 60px rgba(255, 255, 255, 0.4); animation: pulse-zone 0.5s infinite alternate; }
+  .zone-2.active { background: #4ade80; box-shadow: inset 0 0 60px rgba(255, 255, 255, 0.4); animation: pulse-zone 0.5s infinite alternate; }
+  .zone-3.active { background: #60a5fa; box-shadow: inset 0 0 60px rgba(255, 255, 255, 0.4); animation: pulse-zone 0.5s infinite alternate; }
+
+  @keyframes pulse-zone {
+    from { filter: brightness(1); }
+    to   { filter: brightness(1.3); }
+  }
+
+  .player-zone.tap { transform: scale(0.97); }
+  .player-zone.correct::after {
+    content: "+1";
+    position: absolute;
+    font-size: 3rem;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+    animation: pop 0.5s ease-out forwards;
+  }
+  .player-zone.wrong::after {
+    content: "-1";
+    position: absolute;
+    font-size: 3rem;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0 0 20px rgba(0, 0, 0, 0.6);
+    animation: pop 0.5s ease-out forwards;
+  }
+  @keyframes pop {
+    0%   { transform: scale(0.5); opacity: 1; }
+    100% { transform: scale(1.5) translateY(-30px); opacity: 0; }
+  }
+
+  /* === 真ん中：情報バー === */
+  .info-bar {
+    background: rgba(0, 0, 0, 0.5);
+    padding: 8px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.95rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .timer {
+    font-weight: bold;
+    font-size: 1.1rem;
+  }
+  .timer.warning { color: #ff4d6d; animation: pulse 0.5s infinite; }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+
+  /* === オーバーレイ === */
+  .overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 20px;
+  }
+  .overlay.show { display: flex; }
+
+  .overlay-content {
+    background: linear-gradient(135deg, #1a1a2e, #16213e);
+    padding: 24px;
+    border-radius: 16px;
+    text-align: center;
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    max-width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .overlay-content h1 {
+    font-size: 1.8rem;
+    margin-bottom: 12px;
+    letter-spacing: 2px;
+  }
+
+  .overlay-content h2 {
+    font-size: 1.3rem;
+    margin-bottom: 16px;
+    color: #fbbf24;
+  }
+
+  .winner {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin: 16px 0;
+    text-shadow: 0 0 20px currentColor;
+  }
+
+  .scores-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin: 16px 0;
+    font-size: 1.1rem;
+    font-weight: bold;
+  }
+
+  .countdown {
+    font-size: 8rem;
+    font-weight: bold;
+    color: #fbbf24;
+    text-shadow: 0 0 40px #fbbf24;
+  }
+
+  .rules {
+    text-align: left;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 14px;
+    border-radius: 10px;
+    margin: 12px 0;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  .rules li { margin-left: 20px; margin-bottom: 4px; }
+
+  button {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white;
+    border: none;
+    padding: 14px 36px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.5);
+    margin-top: 8px;
+  }
+  button:active { transform: scale(0.97); }
+  button.secondary {
+    background: linear-gradient(135deg, #475569, #64748b);
+    box-shadow: 0 4px 14px rgba(71, 85, 105, 0.4);
+  }
+
+  .button-row {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* プレイヤー1は逆さ向け（向かい側に座る人用） */
+  .zone-1 .label,
+  .zone-1 .score,
+  .zone-1 .target-text {
+    transform: rotate(180deg);
+  }
+  .zone-1 .label { top: auto; bottom: 8px; left: auto; right: 12px; }
+  .zone-1 .target-text { bottom: auto; top: 8px; right: auto; left: 12px; }
+
+  .color-red { color: #ff4d6d; }
+  .color-green { color: #4ade80; }
+  .color-blue { color: #60a5fa; }
+</style>
+</head>
+<body>
+
+  <!-- プレイヤー1（赤・上、テキストは逆さ） -->
+  <div class="player-zone zone-1" id="zone-1" data-player="1">
+    <div class="label">プレイヤー1（赤）</div>
+    <div class="score" id="score-1">0</div>
+    <div class="target-text">タップして得点</div>
+  </div>
+
+  <!-- プレイヤー2（緑・中） -->
+  <div class="player-zone zone-2" id="zone-2" data-player="2">
+    <div class="label">プレイヤー2（緑）</div>
+    <div class="score" id="score-2">0</div>
+    <div class="target-text">タップして得点</div>
+  </div>
+
+  <div class="info-bar">
+    <div class="timer" id="timer">準備OK！</div>
+    <button id="topBtn" style="padding: 6px 16px; font-size: 0.85rem;">メニュー</button>
+  </div>
+
+  <!-- プレイヤー3（青・下） -->
+  <div class="player-zone zone-3" id="zone-3" data-player="3">
+    <div class="label">プレイヤー3（青）</div>
+    <div class="score" id="score-3">0</div>
+    <div class="target-text">タップして得点</div>
+  </div>
+
+  <!-- オーバーレイ -->
+  <div class="overlay show" id="overlay">
+    <div class="overlay-content" id="overlayContent">
+      <h1>カラーバトル</h1>
+      <h2>3人対戦リアクションゲーム</h2>
+      <div class="rules">
+        <strong>遊び方:</strong>
+        <ul>
+          <li>1台のスマホを3人で囲んで遊ぶ</li>
+          <li>自分の色のエリアが光ったら素早くタップ！</li>
+          <li>正解で <strong>+1点</strong>、間違えると <strong>-1点</strong></li>
+          <li>60秒で一番点数が多い人の勝ち</li>
+        </ul>
+        <div style="margin-top: 8px; font-size: 0.85rem; opacity: 0.7;">
+          ※ プレイヤー1は向かいに座って遊ぶと表示が読みやすいよ
+        </div>
+      </div>
+      <button id="startBtn">スタート</button>
+    </div>
+  </div>
+
+<script>
+(() => {
+  const GAME_DURATION = 60;
+  const SPAWN_INTERVAL_MS = 1000;
+  const TARGET_LIFETIME_MS = 1500;
+
+  const PLAYERS = {
+    1: { color: '#ff4d6d', label: '赤', name: 'プレイヤー1' },
+    2: { color: '#4ade80', label: '緑', name: 'プレイヤー2' },
+    3: { color: '#60a5fa', label: '青', name: 'プレイヤー3' }
+  };
+
+  const zones = {
+    1: document.getElementById('zone-1'),
+    2: document.getElementById('zone-2'),
+    3: document.getElementById('zone-3')
+  };
+  const scoreEls = {
+    1: document.getElementById('score-1'),
+    2: document.getElementById('score-2'),
+    3: document.getElementById('score-3')
+  };
+  const timerEl = document.getElementById('timer');
+  const overlay = document.getElementById('overlay');
+  const overlayContent = document.getElementById('overlayContent');
+  const topBtn = document.getElementById('topBtn');
+
+  let scores = { 1: 0, 2: 0, 3: 0 };
+  let activeTargets = new Set(); // 現在光っているプレイヤー番号
+  let targetTimers = {};
+  let timeLeft = GAME_DURATION;
+  let running = false;
+  let timerInterval = null;
+  let spawnInterval = null;
+
+  function updateScores() {
+    for (const p of [1, 2, 3]) scoreEls[p].textContent = scores[p];
+  }
+
+  function setActive(player, isActive) {
+    if (isActive) {
+      zones[player].classList.add('active');
+      activeTargets.add(player);
+    } else {
+      zones[player].classList.remove('active');
+      activeTargets.delete(player);
+      if (targetTimers[player]) {
+        clearTimeout(targetTimers[player]);
+        delete targetTimers[player];
+      }
+    }
+  }
+
+  function spawnTarget() {
+    if (!running) return;
+    // 既に2つ以上同時に光っていれば追加しない
+    if (activeTargets.size >= 2) return;
+    const candidates = [1, 2, 3].filter(p => !activeTargets.has(p));
+    if (candidates.length === 0) return;
+    const player = candidates[Math.floor(Math.random() * candidates.length)];
+    setActive(player, true);
+    targetTimers[player] = setTimeout(() => setActive(player, false), TARGET_LIFETIME_MS);
+  }
+
+  function showFeedback(zoneEl, type) {
+    zoneEl.classList.add(type);
+    setTimeout(() => zoneEl.classList.remove(type), 500);
+  }
+
+  function handleTap(player) {
+    if (!running) return;
+    const zoneEl = zones[player];
+    zoneEl.classList.add('tap');
+    setTimeout(() => zoneEl.classList.remove('tap'), 100);
+
+    if (activeTargets.has(player)) {
+      scores[player] += 1;
+      setActive(player, false);
+      showFeedback(zoneEl, 'correct');
+    } else {
+      scores[player] = Math.max(0, scores[player] - 1);
+      showFeedback(zoneEl, 'wrong');
+    }
+    updateScores();
+  }
+
+  // タップ＆クリック両対応（モバイル優先）
+  for (const p of [1, 2, 3]) {
+    const z = zones[p];
+    let tapped = false;
+    z.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      tapped = true;
+      handleTap(p);
+    }, { passive: false });
+    z.addEventListener('mousedown', (e) => {
+      if (tapped) { tapped = false; return; }
+      handleTap(p);
+    });
+  }
+
+  function tick() {
+    timeLeft -= 1;
+    timerEl.textContent = `残り ${timeLeft}秒`;
+    if (timeLeft <= 10) timerEl.classList.add('warning');
+    if (timeLeft <= 0) endGame();
+  }
+
+  async function startGame() {
+    if (running) return;
+    resetBoard();
+    overlay.classList.add('show');
+    for (const n of ['3', '2', '1', 'GO!']) {
+      overlayContent.innerHTML = `<div class="countdown">${n}</div>`;
+      await new Promise(r => setTimeout(r, 700));
+    }
+    overlay.classList.remove('show');
+
+    running = true;
+    timeLeft = GAME_DURATION;
+    timerEl.textContent = `残り ${timeLeft}秒`;
+    timerEl.classList.remove('warning');
+    timerInterval = setInterval(tick, 1000);
+    spawnInterval = setInterval(spawnTarget, SPAWN_INTERVAL_MS);
+    spawnTarget();
+  }
+
+  function endGame() {
+    running = false;
+    clearInterval(timerInterval);
+    clearInterval(spawnInterval);
+    for (const p of [1, 2, 3]) setActive(p, false);
+
+    const max = Math.max(scores[1], scores[2], scores[3]);
+    const winners = [1, 2, 3].filter(p => scores[p] === max);
+    let winnerHTML;
+    if (winners.length === 1) {
+      const p = winners[0];
+      winnerHTML = `<div class="winner" style="color:${PLAYERS[p].color}">${PLAYERS[p].name}（${PLAYERS[p].label}）の勝ち！</div>`;
+    } else if (winners.length === 3) {
+      winnerHTML = `<div class="winner" style="color:#fbbf24">3人で引き分け！</div>`;
+    } else {
+      const names = winners.map(p => PLAYERS[p].label).join(' & ');
+      winnerHTML = `<div class="winner" style="color:#fbbf24">${names} 引き分け！</div>`;
+    }
+
+    overlayContent.innerHTML = `
+      <h1>ゲーム終了</h1>
+      ${winnerHTML}
+      <div class="scores-list">
+        <div class="color-red">プレイヤー1（赤）: ${scores[1]} 点</div>
+        <div class="color-green">プレイヤー2（緑）: ${scores[2]} 点</div>
+        <div class="color-blue">プレイヤー3（青）: ${scores[3]} 点</div>
+      </div>
+      <div class="button-row">
+        <button id="playAgain">もう一度</button>
+        <button id="backHome" class="secondary">タイトルへ</button>
+      </div>
+    `;
+    overlay.classList.add('show');
+    document.getElementById('playAgain').addEventListener('click', () => {
+      overlay.classList.remove('show');
+      startGame();
+    });
+    document.getElementById('backHome').addEventListener('click', showTitle);
+  }
+
+  function resetBoard() {
+    scores = { 1: 0, 2: 0, 3: 0 };
+    updateScores();
+    for (const p of [1, 2, 3]) setActive(p, false);
+    timeLeft = GAME_DURATION;
+    timerEl.textContent = `残り ${timeLeft}秒`;
+    timerEl.classList.remove('warning');
+  }
+
+  function showTitle() {
+    running = false;
+    clearInterval(timerInterval);
+    clearInterval(spawnInterval);
+    resetBoard();
+    overlayContent.innerHTML = `
+      <h1>カラーバトル</h1>
+      <h2>3人対戦リアクションゲーム</h2>
+      <div class="rules">
+        <strong>遊び方:</strong>
+        <ul>
+          <li>1台のスマホを3人で囲んで遊ぶ</li>
+          <li>自分の色のエリアが光ったら素早くタップ！</li>
+          <li>正解で <strong>+1点</strong>、間違えると <strong>-1点</strong></li>
+          <li>60秒で一番点数が多い人の勝ち</li>
+        </ul>
+        <div style="margin-top: 8px; font-size: 0.85rem; opacity: 0.7;">
+          ※ プレイヤー1は向かいに座って遊ぶと表示が読みやすいよ
+        </div>
+      </div>
+      <button id="startBtn">スタート</button>
+    `;
+    overlay.classList.add('show');
+    document.getElementById('startBtn').addEventListener('click', startGame);
+  }
+
+  topBtn.addEventListener('click', showTitle);
+  document.getElementById('startBtn').addEventListener('click', startGame);
+
+  updateScores();
+
+  // ピンチズーム防止 (iOS Safari)
+  document.addEventListener('gesturestart', (e) => e.preventDefault());
+  document.addEventListener('dblclick', (e) => e.preventDefault());
+})();
+</script>
+</body>
+</html>
