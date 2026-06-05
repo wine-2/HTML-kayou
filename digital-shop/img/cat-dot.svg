@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300" role="img" aria-label="ドット絵">
+  <rect width="400" height="300" fill="#e7eef4"/>
+  <g shape-rendering="crispEdges" transform="translate(116 66)">
+    <!-- 12x12 grid heart-ish cat, 14px cells -->
+    <g fill="#f4a8a0">
+      <rect x="28" y="0" width="14" height="14"/><rect x="42" y="0" width="14" height="14"/>
+      <rect x="98" y="0" width="14" height="14"/><rect x="112" y="0" width="14" height="14"/>
+      <rect x="14" y="14" width="14" height="14"/><rect x="56" y="14" width="14" height="14"/>
+      <rect x="84" y="14" width="14" height="14"/><rect x="126" y="14" width="14" height="14"/>
+      <rect x="0" y="28" width="14" height="14"/><rect x="140" y="28" width="14" height="14"/>
+      <rect x="0" y="42" width="14" height="14"/><rect x="140" y="42" width="14" height="14"/>
+      <rect x="0" y="56" width="14" height="14"/><rect x="140" y="56" width="14" height="14"/>
+      <rect x="14" y="70" width="14" height="14"/><rect x="126" y="70" width="14" height="14"/>
+      <rect x="28" y="84" width="14" height="14"/><rect x="112" y="84" width="14" height="14"/>
+      <rect x="42" y="98" width="14" height="14"/><rect x="98" y="98" width="14" height="14"/>
+      <rect x="56" y="112" width="14" height="14"/><rect x="84" y="112" width="14" height="14"/>
+      <rect x="70" y="126" width="14" height="14"/>
+    </g>
+    <g fill="#fff">
+      <rect x="42" y="42" width="14" height="14"/><rect x="84" y="42" width="14" height="14"/>
+    </g>
+    <g fill="#4a4039">
+      <rect x="42" y="56" width="14" height="14"/><rect x="84" y="56" width="14" height="14"/>
+    </g>
+  </g>
+</svg>
