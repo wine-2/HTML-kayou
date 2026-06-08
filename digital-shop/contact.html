@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ja" class="no-js">
+<head>
+<script>document.documentElement.classList.replace("no-js","js");</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>お問い合わせ｜kotoha</title>
+<meta name="description" content="kotoha へのお問い合わせ・オーダー相談はこちらから。よくある質問もご確認いただけます。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="icon" href="img/logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="index.html" aria-label="kotoha ホーム"><img src="img/logo.svg" alt="kotoha"></a>
+    <button class="nav-toggle" aria-label="メニュー" aria-expanded="false"><span></span></button>
+    <nav class="nav" aria-label="メインメニュー">
+      <a href="index.html">ホーム</a>
+      <a href="shop.html">ショップ</a>
+      <a href="index.html#categories">カテゴリー</a>
+      <a href="about.html">このお店について</a>
+      <a href="contact.html" class="is-active">お問い合わせ</a>
+      <a href="shop.html" class="btn btn--sm nav-cta">商品をさがす</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <section class="page-hero">
+    <div class="container">
+      <span class="en">Contact</span>
+      <h1>お問い合わせ</h1>
+      <p>作品やオーダーについてのご相談はお気軽にどうぞ。</p>
+      <nav class="breadcrumb"><a href="index.html">ホーム</a> ／ お問い合わせ</nav>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <form class="form reveal" data-demo novalidate>
+        <div class="field">
+          <label for="name">お名前 <span class="req">必須</span></label>
+          <input type="text" id="name" name="name" placeholder="山田 はな" required>
+        </div>
+        <div class="field">
+          <label for="email">メールアドレス <span class="req">必須</span></label>
+          <input type="email" id="email" name="email" placeholder="you@example.com" required>
+        </div>
+        <div class="field">
+          <label for="topic">お問い合わせ種別</label>
+          <select id="topic" name="topic">
+            <option>商品について</option>
+            <option>オーダー・カスタマイズの相談</option>
+            <option>ファイル・購入トラブル</option>
+            <option>その他</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="message">内容 <span class="req">必須</span></label>
+          <textarea id="message" name="message" placeholder="お問い合わせ内容をご記入ください。" required></textarea>
+        </div>
+        <p class="form-note" style="display:none;color:var(--accent-d);font-weight:700;" role="status"></p>
+        <div class="submit">
+          <button type="submit" class="btn">送信する</button>
+          <p class="form-note">※ 通常2〜3営業日以内にご返信します。</p>
+        </div>
+        <p class="form-result form-note" style="display:none;color:var(--accent-d);font-weight:700;" role="status"></p>
+      </form>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="band" id="faq">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="en">FAQ</span>
+        <h2>よくある質問</h2>
+      </div>
+      <div class="faq reveal">
+        <details open>
+          <summary>どこで購入できますか？</summary>
+          <div class="answer">販売は <strong>BASE</strong> と <strong>minne</strong> のストアで行っています。各商品ページの「BASEで買う」「minneで買う」ボタンからご購入ください。</div>
+        </details>
+        <details>
+          <summary>購入したデータはどうやって受け取りますか？</summary>
+          <div class="answer">BASE・minne のデジタルコンテンツ販売機能を利用しています。購入完了後、ストアの案内に従ってダウンロードしてください。</div>
+        </details>
+        <details>
+          <summary>ファイル形式は何ですか？</summary>
+          <div class="answer">商品により PNG・JPG・PDF・編集可能テンプレート（Canva等）などです。詳細は各商品ページに記載しています。</div>
+        </details>
+        <details>
+          <summary>オーダーメイドはできますか？</summary>
+          <div class="answer">結婚式アイテムを中心に、お名前入れや色変更などのカスタマイズに対応できる場合があります。上のフォームからご相談ください。</div>
+        </details>
+        <details>
+          <summary>商用利用はできますか？</summary>
+          <div class="answer">多くの素材で商用利用が可能です。範囲は商品ごとに異なるため、<a href="about.html#terms">利用規約</a>と各商品ページをご確認ください。</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <div class="brand"><img src="img/logo.svg" alt="kotoha"></div>
+      <p>デザイン素材・ペーパー・ドット絵・結婚式アイテム・ステッカーを販売するデジタルコンテンツショップです。</p>
+      <div class="socials">
+        <a href="#" aria-label="X (Twitter)">X</a>
+        <a href="#" aria-label="Instagram">IG</a>
+        <a href="#" aria-label="お問い合わせ">@</a>
+      </div>
+    </div>
+    <div>
+      <h4>ショップ</h4>
+      <ul>
+        <li><a href="shop.html#material">イラスト素材</a></li>
+        <li><a href="shop.html#paper">デザインペーパー</a></li>
+        <li><a href="shop.html#dot">ドット絵</a></li>
+        <li><a href="shop.html#wedding">結婚式アイテム</a></li>
+        <li><a href="shop.html#sticker">ステッカー</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>ガイド</h4>
+      <ul>
+        <li><a href="about.html">このお店について</a></li>
+        <li><a href="contact.html">お問い合わせ</a></li>
+        <li><a href="contact.html#faq">よくある質問</a></li>
+        <li><a href="about.html#terms">利用規約</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>販売ストア</h4>
+      <ul>
+        <li><a href="#">BASE で見る</a></li>
+        <li><a href="#">minne で見る</a></li>
+        <li><a href="contact.html">購入についての質問</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © <span data-year>2026</span> kotoha digital content shop. All rights reserved.
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

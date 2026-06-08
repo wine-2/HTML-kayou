@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300" role="img" aria-label="オリジナルステッカー">
+  <rect width="400" height="300" fill="#fdf3e6"/>
+  <g stroke="#fff" stroke-width="6">
+    <circle cx="120" cy="110" r="48" fill="#f4a8a0"/>
+    <rect x="200" y="60" width="96" height="96" rx="18" fill="#a7c4a0"/>
+    <path d="M150 230l18-34 18 34 38 6-27 27 7 38-36-19-36 19 7-38-27-27z" fill="#e7c66b"/>
+    <circle cx="295" cy="210" r="42" fill="#9ec1d6"/>
+  </g>
+  <g fill="#fff">
+    <circle cx="105" cy="100" r="7"/><circle cx="135" cy="100" r="7"/>
+    <path d="M105 122c8 9 22 9 30 0" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
+  </g>
+</svg>

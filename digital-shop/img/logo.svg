@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 48" width="200" height="48" role="img" aria-label="kotoha logo">
+  <g fill="none" stroke="#e89a8c" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="22" cy="24" r="14"/>
+    <path d="M14 26c4 4 10 4 16 0"/>
+    <path d="M18 19.5h.01M28 19.5h.01"/>
+  </g>
+  <text x="46" y="31" font-family="'Zen Maru Gothic','Noto Sans JP',sans-serif" font-size="22" font-weight="700" fill="#4a4039">kotoha</text>
+</svg>

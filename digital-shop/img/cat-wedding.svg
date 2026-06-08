@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" width="400" height="300" role="img" aria-label="結婚式アイテム">
+  <defs><linearGradient id="gw" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#f3eef7"/><stop offset="1" stop-color="#e6dcef"/>
+  </linearGradient></defs>
+  <rect width="400" height="300" fill="url(#gw)"/>
+  <g transform="translate(200 152)">
+    <rect x="-100" y="-62" width="200" height="124" rx="10" fill="#fff" stroke="#cdb9df"/>
+    <path d="M-100 -56 L0 18 L100 -56" fill="none" stroke="#c6a8d6" stroke-width="3"/>
+    <path d="M0 6c-18-26-44-14-44 6 0 18 24 30 44 44 20-14 44-26 44-44 0-20-26-32-44-6z" fill="#e89a8c"/>
+    <g stroke="#c6a8d6" stroke-width="2" stroke-linecap="round">
+      <path d="M-78 36h54M-78 48h40"/>
+    </g>
+  </g>
+</svg>
